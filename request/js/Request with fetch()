@@ -1,0 +1,18 @@
+GET fetch() and POSTfetch() 
+
+GET запрос
+    fetch('https://jsonplaceholder.typicode.com/todos/1') // fetch использует промисы и возвращает промис.
+        .then(response => response.json()) // получаем json объект и методом .json() переводиннаш объект в обычный формат(это метод объекта fetch
+        // тоже возвращает промис тем самым он будет ждать пока не придет ответ от сервера) 
+        .then(json => console.log(json));
+
+     POST запрос
+     fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST', // задаем метод запроса
+        body: JSON.stringify({name:'Alex'}), // отапрвляем объект переводя в json
+        headers: {
+            'Content-type': 'application/json' //  устанавливаем заголовок отправки которые определяют какой контент мы отправляем
+        }  //заголовки помещаются как объект.
+     })  
+     .then(response => response.json())  // получаем json объект и методом .json() переводиннаш объект в обычный формат(это метод объекта fetch
+     .then(json => console.log(json));
