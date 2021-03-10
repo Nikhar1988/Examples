@@ -1,4 +1,4 @@
-GET fetch() and POSTfetch() 
+GET fetch() and POST fetch() 
 
 GET запрос
     fetch('https://jsonplaceholder.typicode.com/todos/1') // fetch использует промисы и возвращает промис.
