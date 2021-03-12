@@ -43,3 +43,27 @@ const request = new XMLHttpRequest(); //создаем объект XMLHttpReque
                 showThanksModal(message.failure);
             }
         });
+        
+        
+        //GET Request
+        
+        const inputRub = document.querySelector('#rub'), 
+        inputUsd = document.querySelector('#usd');
+
+        inputRub.addEventListener('input', () => { // функцианал будет выполнятся при вводе данных в ячеку input
+                const request = new XMLHttpRequest(); //создаем объект XMLHttpRequest();
+
+                request.open('GET', 'js/current1.json'); // пишем метод запроса, и адрес файла к которому выполняем запрос.
+                request.setRequestHeader('Content-type', 'application/json; charset=utf-8'); // устанавливаем заголовок для обычного запроса.
+                request.send(); // отправляем запрос. 
+
+            request.addEventListener('load', () => { // 'load' выводит итоговое значение ответа от сервера.
+                if (request.status === 200) { // если возвращается ответ со статусом 200 все то выполняется код ниже
+                    const data = JSON.parse(request.response); // переводим из формата JSON в объект
+                    inputUsd.value = (+inputRub.value / data.current.usd).toFixed(2); // .toFixed(2) - возвращает всего 2 знака после запятой
+                } else {
+                    inputUsd.value = "Что-то пошло не так";
+                }
+            });
+
+          });
