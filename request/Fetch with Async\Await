@@ -85,11 +85,12 @@ const forms = document.querySelectorAll('form');
         }, 4000);
     }
     
+    
     Create one Card
     
-    getResource('http://localhost:3000/menu')
+    getResource('http://localhost:3000/menu') //вставляем карточки.
         .then(data => {
-            data.forEach(({img, altimg, title, descr, price}) => {
+            data.forEach(({img, altimg, title, descr, price}) => { //деструкторизация данных
                 new MenuCard(img, altimg, title, descr, price, ".menu .container").render();
             });
         });
