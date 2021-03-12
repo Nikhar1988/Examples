@@ -9,8 +9,8 @@ const forms = document.querySelectorAll('form');
         bindPostData(item);
     });
 
-    const postData = async (url, data) => {
-        let res = await fetch(url, {
+    const postData = async (url, data) => { // функция запроса //async говорим что в данной функции у нас есть асинхронный код(потому что нам надо дождатся ответа от сервера)
+        let res = await fetch(url, {  // await ставим там где нам надо дождатся какого либо ответа.
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,9 @@ const forms = document.querySelectorAll('form');
             throw new Error(`Could not fetch ${url}, status: ${res.status}`);
         }
     
-        return await res.json();
+        return await res.json(); // трансформирует в json и вернем промис и дальше будем обрабатывать // так же как и вслучае выше мы не знаем сколько будет идти процесс по преобразованию объекта и мы ставим команду await и будем дожедатся, результ не вернется пока процесс не завершится. 
+    };
+
     }
 
     function bindPostData(form) {
@@ -45,9 +47,9 @@ const forms = document.querySelectorAll('form');
         
             const formData = new FormData(form);
 
-            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+            const json = JSON.stringify(Object.fromEntries(formData.entries())); // другой способ перевода объекта FromData в объект JSON.
 
-            postData('http://localhost:3000/requests', json)
+            postData('http://localhost:3000/requests', json) // используем функцию запроса
             .then(data => {
                 console.log(data);
                 showThanksModal(message.success);
