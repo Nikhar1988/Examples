@@ -21,6 +21,8 @@ const forms = document.querySelectorAll('form');
         return await res.json();
     };
 
+Get запрос на создание крточек {{{{
+
     async function getResource(url) {
         let res = await fetch(url);
     
@@ -31,8 +33,24 @@ const forms = document.querySelectorAll('form');
         return await res.json(); // трансформирует в json и вернем промис и дальше будем обрабатывать // так же как и вслучае выше мы не знаем сколько будет идти процесс по преобразованию объекта и мы ставим команду await и будем дожедатся, результ не вернется пока процесс не завершится. 
     };
 
-    }
-
+    getResource('http://localhost:3000/menu') //вставляем карточки.
+            .then(data => {
+                data.forEach(({img, altimg, title, descr, price}) => { //деструкторизация данных
+                    new MenuCard(img, altimg, title, descr, price, ".menu .container").render();
+                });
+            });
+        
+   
+   Реализация при помощи библиотеки axios.
+   
+   axios.get('http://localhost:3000/menu')
+        .then(data => {
+            data.data.forEach(({img, altimg, title, descr, price}) => {
+                new MenuCard(img, altimg, title, descr, price, ".menu .container").render();
+            });;
+        });
+}}}}
+   
     function bindPostData(form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -88,12 +106,7 @@ const forms = document.querySelectorAll('form');
     
     Create one Card
     
-    getResource('http://localhost:3000/menu') //вставляем карточки.
-        .then(data => {
-            data.forEach(({img, altimg, title, descr, price}) => { //деструкторизация данных
-                new MenuCard(img, altimg, title, descr, price, ".menu .container").render();
-            });
-        });
+    
 
      getResource('http://localhost:3000/menu')
          .then(data => createCard(data));
