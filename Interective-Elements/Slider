@@ -45,3 +45,92 @@
      next.addEventListener('click', function(){
          plusSlides(1);
      });
+     
+     
+     
+      //Slider version 2
+    let slideIndex = 1,
+        offset = 0;
+
+    const slides = document.querySelectorAll('.offer__slide'),
+        prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current'),
+        slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+        slidesField = document.querySelector('.offer__slider-inner'),
+        width = window.getComputedStyle(slidesWrapper).width; // получаем свойство ширины полученного объекта slidesWrapper
+
+        console.log(slides)
+   
+        if (slides.length < 10) { //если длина NodeList боьше меньще 10
+            total.textContent = `0${slides.length}`;
+            
+        } else {
+            total.textContent = slides.length;
+             
+        }
+
+        if(slideIndex < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+
+        slidesField.style.width = 100 * slides.length + '%'; // получаем ширину нашего элемента хранившего картинки.
+        slides.forEach(slide => {
+            slide.style.width = width; // каждому слайду задаем ширину окна.
+        });
+
+        slidesField.style.display = 'flex'; //распологаем наши слайжы горизонтально
+        slidesField.style.transition = '0.5s all'; // анимация прокрутки скорость
+        slidesWrapper.style.overflow = 'hidden'; // тегу родителя говорим спрятать все что за меня выходит
+
+        next.addEventListener('click', () => { 
+            if( offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {
+                offset = 0;
+            } else {
+                 offset += +width.slice(0, width.length - 2);
+            }  
+            
+            slidesField.style.transform = `translateX(-${offset}px)`; //сдвигаем наш элемент если значение положительное в право отрицательное в лево.  
+        
+            if(slideIndex == slides.length) {
+                slideIndex = 1;
+            } else {
+                slideIndex++;
+            }
+
+            if (slideIndex < 10) {
+                current.textContent = `0${slideIndex}`;
+            } else {
+                current.textContent = slideIndex;
+            }
+        
+        
+        
+        });
+
+
+        prev.addEventListener('click', () => {
+            if(offset == 0 ) {
+                offset = +width.slice(0, width.length - 2) * (slides.length - 1);
+            } else {
+                 offset -= +width.slice(0, width.length - 2);
+            }  
+            
+            slidesField.style.transform = `translateX(-${offset}px)`; //сдвигаем наш элемент если значение положительное в право отрицательное в лево.  
+        
+            if(slideIndex == 1) {
+                slideIndex = slides.length;
+            } else {
+                slideIndex--;
+            }
+
+            if (slideIndex  < 10) {
+                current.textContent = `0${slideIndex}`;
+            } else {
+                current.textContent = slideIndex;
+            }
+        
+        })
